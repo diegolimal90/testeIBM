@@ -62,8 +62,8 @@ app.get('/book/by-author/:author-part', function(req, res){
     });
 });
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!')
+app.listen(process.env.PORT || 3000, function(){
+	console.log("Servidor Express funcionando na porta %d no modo %s", this.address().port, app.settings.env);
 });
 
 conect: con.connect(function(error){
