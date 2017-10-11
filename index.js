@@ -5,7 +5,7 @@ var mysql = require('mysql');
 
 //variavel para manupulação do express
 var app = express();
-var con = mysql.createConnection(conf.config);
+var con = mysql.createConnection(postgres://bxztrriotyzafm:11d40b2d4b6ce1cb191c7c1c3f24222433c2052b6d2c57d98f40a54967a759a4@ec2-23-21-92-251.compute-1.amazonaws.com:5432/dcsgj96bm1390v);
 
 //rota para auxilio ao usuário da plataforma
 app.get('/', function (req, res) {
