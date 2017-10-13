@@ -5,7 +5,7 @@ var mysql = require('mysql');
 
 //variavel para manupulação do express
 var app = express();
-var con = mysql.createConnection('postgres://bxztrriotyzafm:11d40b2d4b6ce1cb191c7c1c3f24222433c2052b6d2c57d98f40a54967a759a4@ec2-23-21-92-251.compute-1.amazonaws.com:5432/dcsgj96bm1390v');
+var con = mysql.createConnection(conf.config);
 
 //rota para auxilio ao usuário da plataforma
 app.get('/', function (req, res) {
@@ -15,7 +15,6 @@ app.get('/', function (req, res) {
 
 //rota de busca ao usuário do banco de dados
 app.get('/user/by-name/:namepart', function(req, res){
-    table = "user";
     //passando o valor do paramentro get para a variavel namepart
     var namepart = req.params.namepart;
     //efetua a consulta no banco de dados
@@ -31,11 +30,11 @@ app.get('/user/by-name/:namepart', function(req, res){
 });
 
 //rota de busca ao titulo do livro no banco de dados
-app.get('/book/by-title/:title-part', function(req, res){
+app.get('/book/by-title/:titlepart', function(req, res){
     //passando o valor do paramentro get para a variavel namepart
-    var namepart = req.params.namepart;
+    var titlepart = req.params.titlepart;
     //gera a consulta no banco de dados
-    con.query("SELECT * FROM book WHERE titulo LIKE '%"+ namepart +"%'", function(error, rows, fields){
+    con.query("SELECT b.id_book,b.title, a.nome, b.anoPublicado, b.preco, b.classif FROM book b INNER JOIN autor a ON (a.id_autor = b.id_autor) WHERE title LIKE '%"+ titlepart +"%'", function(error, rows, fields){
         //verifica se ocorreu um erro no consulta
         if(error){
             console.log("ERRO AO EXECUTAR A QUERY " + error);
@@ -47,11 +46,11 @@ app.get('/book/by-title/:title-part', function(req, res){
 });
 
 //rota de busca ao titulo do livro no banco de dados
-app.get('/book/by-author/:author-part', function(req, res){
+app.get('/book/by-author/:authorpart', function(req, res){
     //passando o valor do paramentro get para a variavel namepart
-    var namepart = req.params.namepart;
+    var authorpart = req.params.authorpart;
     //gera a consulta no banco de dados
-    con.query("SELECT * FROM autor WHERE nome LIKE '%"+ namepart +"%'", function(error, rows, fields){
+    con.query("SELECT * FROM autor WHERE nome LIKE '%"+ authorpart +"%'", function(error, rows, fields){
         //verifica se ocorreu um erro no consulta
         if(error){
             console.log("ERRO AO EXECUTAR A QUERY " + error);
