@@ -1,0 +1,4 @@
+applications:
+- name: testebluehunter
+  random-route: true
+  memory: 128M
